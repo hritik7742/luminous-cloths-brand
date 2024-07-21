@@ -1,0 +1,15 @@
+.newsletter-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .newsletter-form input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .newsletter-form .btn {
+    align-self: flex-start;
+  }
