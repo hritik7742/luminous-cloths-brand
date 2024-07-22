@@ -222,6 +222,8 @@ function ProductList() {
   const searchParams = new URLSearchParams(location.search);
   const category = searchParams.get('category');
 
+
+  
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'products'), (snapshot) => {
       const productsList = snapshot.docs.map(doc => ({
@@ -231,9 +233,13 @@ function ProductList() {
       setProducts(productsList);
     });
 
+    
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
+
+  window.scrollTo(0, 0); // Scroll to top when the component is mounted
+ 
 
   const filteredProducts = products.filter(product => {
     if (category === 'western' || category === 'traditional') {

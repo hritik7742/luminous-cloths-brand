@@ -55,6 +55,7 @@
   color: var(--white);
   padding: 40px 0;
   flex-shrink: 0;
+  font-family: "cinzel";
 }
 
 .footer-content {

@@ -19,6 +19,9 @@ h2 {
   color: #333;
   margin-bottom: 20px;
   text-align: center;
+  font-family: "cinzel";
+  font-weight: lighter;
+  font-size: 25px;
 }
 
 .input-group {
@@ -141,6 +144,8 @@ select {
   display: flex;
   flex-direction: column;
   /* gap: 10px; */
+  font-family: cinzel;
+  font-weight: lighter;
 }
 
 .product-info img {

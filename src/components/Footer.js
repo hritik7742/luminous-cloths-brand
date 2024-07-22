@@ -57,19 +57,19 @@ function Footer() {
           <div className="footer-section">
             <h3>Quick Links</h3>
             <ul>
-              <li><Link to="/about">About Us</Link></li>
-              <li><Link to="/contact">Contact Us</Link></li>
-              <li><Link to="/faq">FAQs</Link></li>
-              <li><Link to="/return-policy">Return Policy</Link></li>
+              <li><Link>About Us</Link></li>
+              <li><Link>Contact Us</Link></li>
+              <li><Link>FAQs</Link></li>
+              <li><Link>Return Policy</Link></li>
             </ul>
           </div>
           <div className="footer-section">
             <h3>Customer Service</h3>
             <ul>
-              <li><Link to="/order-tracking">Order Tracking</Link></li>
-              <li><Link to="/size-guide">Size Guide</Link></li>
-              <li><Link to="/shipping-info">Shipping Info</Link></li>
-              <li><Link to="/gift-cards">Gift Cards</Link></li>
+              <li><Link>Order Tracking</Link></li>
+              <li><Link>Size Guide</Link></li>
+              <li><Link>Shipping Info</Link></li>
+              <li><Link>Gift Cards</Link></li>
             </ul>
           </div>
           <Newsletter />

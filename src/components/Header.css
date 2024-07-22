@@ -74,6 +74,7 @@ nav ul {
   display: flex;
   list-style-type: none;
   padding: 10px 0;
+  font-family: 'cinzel';
 }
 
 nav ul li {
@@ -105,6 +106,7 @@ nav ul li a:hover {
   z-index: 1000;
   padding: 20px;
   box-sizing: border-box;
+  font-family: 'cinzel';
 }
 
 .sidebar.open {
