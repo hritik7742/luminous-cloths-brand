@@ -594,16 +594,33 @@ function Header() {
     }
   };
 
+  // const handleSearchChange = (e) => {
+  //   const query = e.target.value;
+  //   setSearchQuery(query);
+
+  //   if (query.trim() === '') {
+  //     setSearchResults([]);
+  //   } else {
+  //     const filteredResults = products.filter(product =>
+  //       product.name.toLowerCase().includes(query.toLowerCase()) ||
+  //       product.description.toLowerCase().includes(query.toLowerCase()) 
+  //     );
+  //     setSearchResults(filteredResults);
+  //   }
+    
+  // };
+
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-
+  
     if (query.trim() === '') {
       setSearchResults([]);
     } else {
       const filteredResults = products.filter(product =>
         product.name.toLowerCase().includes(query.toLowerCase()) ||
-        product.description.toLowerCase().includes(query.toLowerCase()) 
+        product.description.toLowerCase().includes(query.toLowerCase()) ||
+        product.productCode.toLowerCase().includes(query.toLowerCase())
       );
       setSearchResults(filteredResults);
     }
@@ -684,7 +701,7 @@ function Header() {
 
       {searchOpen && (
         <div className="search-overlay" ref={searchOverlayRef}>
-          <div className="search-results">
+          <div className="search-results"  >
             {searchResults.map(product => (
               <div
                 onClick={() => handleSearchResultClick(product)}

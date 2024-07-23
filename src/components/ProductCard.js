@@ -32,7 +32,7 @@ function ProductCard({ product }) {
   return (
     <div className="product-card">
       <Link to={`/product/${product.id}`} className="product-image-link">
-        <img src={product.image} alt={product.name} className="product-image" />
+        <img loading='lazy' src={product.image} alt={product.name} className="product-image" />
       </Link>
       <div className="product-info">
         <h3 className="product-title">{product.name}</h3>

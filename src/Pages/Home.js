@@ -139,6 +139,8 @@ import './Home.css';
 import './ProductDetail.css';
 import Poster from '../components/Poster';
 import { sendWhatsAppMessage } from '../Utils/whatsapp';
+import Faq from '../components/Faq';
+import Login from '../Admin/Login';
 
 function Home() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -191,7 +193,7 @@ function Home() {
     // Fetch specific product
     const fetchSpecificProduct = async () => {
       try {
-        const productDoc = doc(db, 'products', '0FneWgv99igvcf58mULm');
+        const productDoc = doc(db, 'products', 'iPBbAQwcrAvrH9wQvTks');
         const productSnap = await getDoc(productDoc);
         if (productSnap.exists()) {
           setSpecificProduct({ id: productSnap.id, ...productSnap.data() });
@@ -224,7 +226,7 @@ function Home() {
           <h2>Collections</h2>
           <div className="product-grid">
             {featuredProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard  key={product.id} product={product} />
             ))}
           </div>
         </div>
@@ -268,9 +270,6 @@ function Home() {
             ))}
           </div>
         </div>
-      </section>
-      <section>
-        <Poster/>
       </section>
       <main className="product-detail">
         <div className="container">
@@ -329,6 +328,14 @@ function Home() {
           </div>
         </div>
       </main>
+      <section>
+        <Poster/>
+      </section>
+      <section>
+        <Faq/>
+      </section>
+    
+
     </main>
   );
 }

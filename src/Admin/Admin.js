@@ -1,5 +1,5 @@
 // import React, { useState, useEffect } from 'react';
-// import { collection, addDoc, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
+// import { collection, addDoc, deleteDoc, doc, onSnapshot, getDoc, setDoc } from 'firebase/firestore';
 // import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 // import { db, storage } from './Firebase';
 // import './Admin.css';
@@ -14,7 +14,8 @@
 //     rating: 0,
 //     ratingCount: '',
 //     reviewCount: '',
-//     sizes: []
+//     sizes: [],
+//     productCode: ''
 //   });
 //   const [products, setProducts] = useState([]);
 //   const [imageFile, setImageFile] = useState(null);
@@ -50,6 +51,22 @@
 //     setProduct({ ...product, sizes: updatedSizes });
 //   };
 
+//   const generateProductCode = async () => {
+//     const latestCodeDoc = doc(db, 'metadata', 'latestProductCode');
+//     const latestCodeSnap = await getDoc(latestCodeDoc);
+    
+//     let newProductCode;
+//     if (latestCodeSnap.exists()) {
+//       const latestCode = latestCodeSnap.data().code;
+//       newProductCode = (parseInt(latestCode) + 1).toString().padStart(5, '0');
+//     } else {
+//       newProductCode = '00001';
+//     }
+
+//     await setDoc(latestCodeDoc, { code: newProductCode });
+//     return newProductCode;
+//   };
+
 //   const handleAddProduct = async () => {
 //     try {
 //       let imageUrl = '';
@@ -59,13 +76,16 @@
 //         imageUrl = await getDownloadURL(imageRef);
 //       }
 
+//       const productCode = await generateProductCode();
+
 //       await addDoc(collection(db, 'products'), {
 //         ...product,
 //         image: imageUrl,
 //         price: parseFloat(product.price),
 //         rating: parseFloat(product.rating),
 //         ratingCount: parseInt(product.ratingCount),
-//         reviewCount: parseInt(product.reviewCount)
+//         reviewCount: parseInt(product.reviewCount),
+//         productCode: productCode
 //       });
 //       alert('Product added successfully!');
 //       setProduct({
@@ -77,7 +97,8 @@
 //         rating: 0,
 //         ratingCount: 0,
 //         reviewCount: 0,
-//         sizes: []
+//         sizes: [],
+//         productCode: ''
 //       });
 //       setImageFile(null);
 //     } catch (error) {
@@ -164,6 +185,7 @@
 //                   <h3>{product.name}</h3>
 //                   <p>Price: ₹{product.price.toFixed(2)}</p>
 //                   <p>Category: {product.category}</p>
+//                   <p>Product Code: {product.productCode}</p>
 //                   <div style={{ whiteSpace: 'pre-wrap' }}>{product.description}</div>
 //                   <p>Rating: {product.rating} ★ ({product.ratingCount} ratings, {product.reviewCount} reviews)</p>
 //                   <p>Sizes: {product.sizes.join(', ')}</p>
@@ -180,14 +202,38 @@
 
 // export default Admin;
 
-
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { collection, addDoc, deleteDoc, doc, onSnapshot, getDoc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, storage } from './Firebase';
+import { db, storage, auth } from './Firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import './Admin.css';
 
 function Admin() {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        navigate('/login'); // Updated navigation
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]); // Correct dependency for useEffect
+
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      navigate('/login'); // Redirect after logout
+    }).catch((error) => {
+      console.error('Logout error:', error);
+    });
+  };
+
   const [product, setProduct] = useState({
     name: '',
     price: '',
@@ -300,6 +346,7 @@ function Admin() {
 
   return (
     <div className="admin-container">
+      <button style={{padding:"10px 30px 10px 30px" , background:"#007bff",border:"none", color:"white" ,borderRadius:"5px"}} onClick={handleLogout}>Logout</button>
       <div className="form-container">
         <h2>Add Product</h2>
         <div className="input-group">
@@ -340,44 +387,44 @@ function Admin() {
           <input type="number" name="reviewCount" placeholder="Review Count" value={product.reviewCount} onChange={handleChange} min="0" />
         </div>
         <div className="input-group">
-          <p>Sizes:</p>
           <div className="sizes-container">
-            {['S', 'M', 'L', 'XL', 'XXL'].map(size => (
+            {['S', 'M', 'L', 'XL'].map(size => (
               <label key={size} className="size-label">
-                <input
-                  type="checkbox"
-                  checked={product.sizes.includes(size)}
-                  onChange={() => handleSizeChange(size)}
+                <input 
+                  type="checkbox" 
+                  name="sizes" 
+                  value={size} 
+                  checked={product.sizes.includes(size)} 
+                  onChange={() => handleSizeChange(size)} 
                 />
                 {size}
               </label>
             ))}
           </div>
         </div>
-        <button className="add-product-button" onClick={handleAddProduct}>Add Product</button>
+        <button onClick={handleAddProduct} className="add-product-button">Add Product</button>
       </div>
-
       <div className="product-list">
         <h2>Product List</h2>
         <ul>
-          {products.map((product) => (
-            <li key={product.id}>
-              <div className="product-info">
-                <img src={product.image} alt={product.name} />
-                <div>
-                  <h3>{product.name}</h3>
+   {products.map((product) => (
+             <li key={product.id}>
+               <div className="product-info">
+                 <img src={product.image} alt={product.name} />
+                 <div>
+                   <h3>{product.name}</h3>
                   <p>Price: ₹{product.price.toFixed(2)}</p>
-                  <p>Category: {product.category}</p>
-                  <p>Product Code: {product.productCode}</p>
-                  <div style={{ whiteSpace: 'pre-wrap' }}>{product.description}</div>
-                  <p>Rating: {product.rating} ★ ({product.ratingCount} ratings, {product.reviewCount} reviews)</p>
-                  <p>Sizes: {product.sizes.join(', ')}</p>
-                </div>
-              </div>
-              <button className="delete-button" onClick={() => handleDeleteProduct(product.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
+                   <p>Category: {product.category}</p>
+                   <p>Product Code: {product.productCode}</p>
+                   {/* <div style={{ whiteSpace: 'pre-wrap' }}>{product.description}</div> */}
+                   <p>Rating: {product.rating} ★ ({product.ratingCount} ratings, {product.reviewCount} reviews)</p>
+                   <p>Sizes: {product.sizes.join(', ')}</p>
+                 </div>
+               </div>
+               <button className="delete-button" onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+             </li>
+           ))}
+         </ul>
       </div>
     </div>
   );

@@ -61,7 +61,7 @@ header {
 }
 
 .header-actions .sidebar-icon,
-.header-actions .search-icon {
+.header-actions  {
   background: none;
   border: none;
   font-size: 24px;

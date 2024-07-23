@@ -147,7 +147,7 @@ function ProductDetail() {
         <div className="product-detail-content">
           <div className="product-images">
             <div className="main-image">
-              <img src={product.image} alt={product.name} />
+              <img loading='lazy' src={product.image} alt={product.name} />
             </div>
             <div className="thumbnail-images">
               {/* Add thumbnail images here if needed */}
