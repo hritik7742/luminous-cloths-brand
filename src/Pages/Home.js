@@ -231,11 +231,11 @@ function Home() {
           </div>
         </div>
       </div>
-      <section className="western-dresses">
+      <section className="Traditional-dresses">
         <div className="container">
-          <h2 style={{textAlign:"left"}}>Western </h2>
+          <h2 style={{textAlign:"left"}}>Traditional </h2>
           <div className="product-grid">
-            {westernProducts.map(product => (
+            {TraditionalProducts.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
@@ -261,11 +261,11 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="Traditional-dresses">
+      <section className="western-dresses">
         <div className="container">
-          <h2 style={{textAlign:"left"}}>Traditional </h2>
+          <h2 style={{textAlign:"left"}}>Western </h2>
           <div className="product-grid">
-            {TraditionalProducts.map(product => (
+            {westernProducts.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
