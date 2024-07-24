@@ -144,8 +144,11 @@ select {
   display: flex;
   flex-direction: column;
   /* gap: 10px; */
-  font-family: cinzel;
+  font-family: 'Roboto';
   font-weight: lighter;
+}
+.product-info h1{
+  font-family: "Italiana"
 }
 
 .product-info img {
@@ -158,6 +161,7 @@ select {
 
 .product-info h3 {
   font-size: 18px;
+  font-family: 'italiana';
   color: #333;
   margin: 0;
 }
@@ -213,5 +217,8 @@ select {
 @media (max-width: 768px) {
   .product-list ul {
     grid-template-columns: 1fr;
+  } 
+  .product-info h3 {
+    font-size: 15px;
   }
 }

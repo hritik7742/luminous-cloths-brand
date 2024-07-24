@@ -210,6 +210,10 @@ nav ul li a:hover {
     display: none;
   }
 
+  nav ul li{
+    margin-right: 14px;
+  }
+
   .search-bar.open {
     display: flex;
     position: absolute;
@@ -238,6 +242,7 @@ nav ul li a:hover {
     align-items: center;
   }
 }
+
 
 /* Desktop Styles */
 @media (min-width: 769px) {

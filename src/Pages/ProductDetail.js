@@ -180,7 +180,7 @@ function ProductDetail() {
               <h3>Product Details</h3>
               <ul>
                 <li>Name: {product.name}</li>
-                <li>Product Code: {product.productCode}</li>
+                {/* <li>Product Code: {product.productCode}</li> */}
                 <div style={{ whiteSpace: 'pre-wrap' }}>{product.description}</div>
               </ul>
             </div>
