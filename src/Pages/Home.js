@@ -162,7 +162,7 @@ function Home() {
   ];
 
   useEffect(() => {
-    // Fetch featured products
+    // Fetch featured products (assuming you have a 'featured' field)
     const featuredQuery = query(collection(db, 'products'), where('featured', '==', true), limit(4));
     const unsubscribeFeatured = onSnapshot(featuredQuery, (snapshot) => {
       const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -170,30 +170,29 @@ function Home() {
     });
 
     // Fetch western products
-    const westernQuery = query(collection(db, 'products'), where('category', '==', 'western'), limit(4));
+    const westernQuery = query(collection(db, 'products'), where('categories', 'array-contains', 'western'), limit(4));
     const unsubscribeWestern = onSnapshot(westernQuery, (snapshot) => {
       const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setWesternProducts(products);
     });
 
     // Fetch traditional products
-    const TraditionalQuery = query(collection(db, 'products'), where('category', '==', 'traditional'), limit(4));
-    const unsubscribeTraditional = onSnapshot(TraditionalQuery, (snapshot) => {
+    const traditionalQuery = query(collection(db, 'products'), where('categories', 'array-contains', 'traditional'), limit(4));
+    const unsubscribeTraditional = onSnapshot(traditionalQuery, (snapshot) => {
       const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setTraditionalProducts(products);
     });
 
     // Fetch sale products
-    const saleQuery = query(collection(db, 'products'), where('category', '==', 'sale'), limit(4));
+    const saleQuery = query(collection(db, 'products'), where('categories', 'array-contains', 'sale'), limit(4));
     const unsubscribeSale = onSnapshot(saleQuery, (snapshot) => {
       const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setSaleProducts(products);
     });
-
     // Fetch specific product
     const fetchSpecificProduct = async () => {
       try {
-        const productDoc = doc(db, 'products', 'iPBbAQwcrAvrH9wQvTks');
+        const productDoc = doc(db, 'products', '5HZo2a33CprZjJvYNOE8');
         const productSnap = await getDoc(productDoc);
         if (productSnap.exists()) {
           setSpecificProduct({ id: productSnap.id, ...productSnap.data() });
