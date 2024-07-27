@@ -639,7 +639,7 @@ function Admin() {
     image: '',
     categories: [],
     description: '',
-    rating: 0,
+    rating: '',
     ratingCount: '',
     reviewCount: '',
     sizes: [],
@@ -817,7 +817,7 @@ function Admin() {
           <label className="upload-label" htmlFor="image-upload">Upload Image</label>
           <input id="image-upload" type="file" name="image" onChange={handleImageChange} />
         </div>
-        <div className="input-group">
+        {/* <div className="input-group">
           <div className="categories-container">
             {['western', 'traditional', 'new-arrivals', 'sale'].map(category => (
               <label key={category} className="category-label">
@@ -829,6 +829,25 @@ function Admin() {
                   onChange={() => handleCategoryChange(category)} 
                 />
                 {category}
+              </label>
+            ))}
+          </div>
+        </div> */}
+
+        <div className="input-group">
+          <div className="categories-container">
+            {['western', 'traditional', 'new-arrivals', 'sale'].map(category => (
+              <label key={category} className="category-label">
+                <input 
+                  type="checkbox" 
+                  id={`category-${category}`}
+                  name="categories" 
+                  value={category} 
+                  checked={product.categories.includes(category)} 
+                  onChange={() => handleCategoryChange(category)} 
+                />
+                <span className="checkmark"></span>
+                {category.charAt(0).toUpperCase() + category.slice(1)}
               </label>
             ))}
           </div>
