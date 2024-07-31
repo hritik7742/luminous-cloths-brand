@@ -1,4 +1,3 @@
-
 // import React, { useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import { collection, addDoc, deleteDoc, doc, onSnapshot, getDoc, setDoc, updateDoc, query, where } from 'firebase/firestore';
@@ -37,6 +36,7 @@
 //     price: '',
 //     image: '',
 //     categories: [],
+//     subcategories: [],
 //     description: '',
 //     rating: '',
 //     ratingCount: '',
@@ -49,6 +49,13 @@
 //   const [imageFile, setImageFile] = useState(null);
 //   const [editMode, setEditMode] = useState(false);
 //   const [editId, setEditId] = useState(null);
+
+//   const categorySubcategories = {
+//     western: ['Dress', 'Top', 'Jeans', 'Skirt', 'Jacket'],
+//     traditional: ['Saree', 'Kurti', 'Lehenga', 'Salwar Kameez', 'Blouse'],
+//     'new-arrivals': ['Latest Collection', 'Trending', 'Seasonal'],
+//     sale: ['Clearance', 'Seasonal Offers', 'Limited Time Deal']
+//   };
 
 //   useEffect(() => {
 //     if (user) {
@@ -66,7 +73,8 @@
 //             id: doc.id,
 //             ...data,
 //             sizes: data.sizes || [],
-//             categories: data.categories || []
+//             categories: data.categories || [],
+//             subcategories: data.subcategories || []
 //           };
 //         });
 //         setProducts(productsList);
@@ -110,7 +118,20 @@
 //     const updatedCategories = product.categories.includes(category)
 //       ? product.categories.filter(c => c !== category)
 //       : [...product.categories, category];
-//     setProduct({ ...product, categories: updatedCategories });
+    
+//     // Reset subcategories when changing categories
+//     const updatedSubcategories = updatedCategories.length === 0 ? [] : product.subcategories.filter(sub => 
+//       updatedCategories.some(cat => categorySubcategories[cat].includes(sub))
+//     );
+    
+//     setProduct({ ...product, categories: updatedCategories, subcategories: updatedSubcategories });
+//   };
+
+//   const handleSubcategoryChange = (subcategory) => {
+//     const updatedSubcategories = product.subcategories.includes(subcategory)
+//       ? product.subcategories.filter(s => s !== subcategory)
+//       : [...product.subcategories, subcategory];
+//     setProduct({ ...product, subcategories: updatedSubcategories });
 //   };
 
 //   const generateProductCode = async () => {
@@ -133,6 +154,7 @@
 //     setProduct({
 //       ...product,
 //       categories: product.categories || [],
+//       subcategories: product.subcategories || [],
 //     });
 //     setEditMode(true);
 //     setEditId(product.id);
@@ -156,6 +178,7 @@
 //         ratingCount: parseInt(product.ratingCount),
 //         reviewCount: parseInt(product.reviewCount),
 //         categories: product.categories,
+//         subcategories: product.subcategories,
 //         createdBy: user.email
 //       };
 
@@ -176,6 +199,7 @@
 //         price: '',
 //         image: '',
 //         categories: [],
+//         subcategories: [],
 //         description: '',
 //         rating: 0,
 //         ratingCount: 0,
@@ -203,7 +227,7 @@
 
 //   return (
 //     <div className="admin-container">
-//       <button style={{padding:"10px 30px 10px 30px" , background:"#007bff",border:"none", color:"white" ,borderRadius:"5px"}} onClick={handleLogout}>Logout</button>
+//       <button style={{padding:"10px 30px 10px 30px", background:"#007bff", border:"none", color:"white", borderRadius:"5px"}} onClick={handleLogout}>Logout</button>
 //       <div className="form-container">
 //         <h2>{editMode ? 'Edit Product' : 'Add Product'}</h2>
 //         <div className="input-group">
@@ -216,26 +240,9 @@
 //           <label className="upload-label" htmlFor="image-upload">Upload Image</label>
 //           <input id="image-upload" type="file" name="image" onChange={handleImageChange} />
 //         </div>
-//         {/* <div className="input-group">
-//           <div className="categories-container">
-//             {['western', 'traditional', 'new-arrivals', 'sale'].map(category => (
-//               <label key={category} className="category-label">
-//                 <input 
-//                   type="checkbox" 
-//                   name="categories" 
-//                   value={category} 
-//                   checked={product.categories.includes(category)} 
-//                   onChange={() => handleCategoryChange(category)} 
-//                 />
-//                 {category}
-//               </label>
-//             ))}
-//           </div>
-//         </div> */}
-
 //         <div className="input-group">
 //           <div className="categories-container">
-//             {['western', 'traditional', 'new-arrivals', 'sale'].map(category => (
+//             {Object.keys(categorySubcategories).map(category => (
 //               <label key={category} className="category-label">
 //                 <input 
 //                   type="checkbox" 
@@ -248,6 +255,29 @@
 //                 <span className="checkmark"></span>
 //                 {category.charAt(0).toUpperCase() + category.slice(1)}
 //               </label>
+//             ))}
+//           </div>
+//         </div>
+//         <div className="input-group">
+//           <div className="subcategories-container">
+//             {product.categories.map(category => (
+//               <div key={category}>
+//                 <h4>{category.charAt(0).toUpperCase() + category.slice(1)} Subcategories:</h4>
+//                 {categorySubcategories[category].map(subcategory => (
+//                   <label key={subcategory} className="subcategory-label">
+//                     <input 
+//                       type="checkbox" 
+//                       id={`subcategory-${subcategory}`}
+//                       name="subcategories" 
+//                       value={subcategory} 
+//                       checked={product.subcategories.includes(subcategory)} 
+//                       onChange={() => handleSubcategoryChange(subcategory)} 
+//                     />
+//                     <span className="checkmark"></span>
+//                     {subcategory}
+//                   </label>
+//                 ))}
+//               </div>
 //             ))}
 //           </div>
 //         </div>
@@ -297,6 +327,7 @@
 //               price: '',
 //               image: '',
 //               categories: [],
+//               subcategories: [],
 //               description: '',
 //               rating: 0,
 //               ratingCount: 0,
@@ -321,6 +352,7 @@
 //                   <h3>{product.name}</h3>
 //                   <p>Price: ₹{product.price.toFixed(2)}</p>
 //                   <p>Categories: {product.categories.join(', ')}</p>
+//                   <p>Subcategories: {product.subcategories.join(', ')}</p>
 //                   <p>Product Code: {product.productCode}</p>
 //                   <p>Rating: {product.rating} ★ ({product.ratingCount} ratings, {product.reviewCount} reviews)</p>
 //                   <p>Sizes: {product.sizes.join(', ')}</p>
@@ -340,6 +372,7 @@
 // }
 
 // export default Admin;
+
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -392,6 +425,8 @@ function Admin() {
   const [imageFile, setImageFile] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [imageUploaded, setImageUploaded] = useState(false);
+  const [showImageWarning, setShowImageWarning] = useState(false);
 
   const categorySubcategories = {
     western: ['Dress', 'Top', 'Jeans', 'Skirt', 'Jacket'],
@@ -444,9 +479,13 @@ function Admin() {
 
       const compressedFile = await imageCompression(file, options);
       setImageFile(compressedFile);
+      setImageUploaded(true);
+      setShowImageWarning(false);
     } catch (error) {
       console.error('Error compressing image:', error);
       setImageFile(file);  // Use original file if compression fails
+      setImageUploaded(true);
+      setShowImageWarning(false);
     }
   };
 
@@ -501,10 +540,16 @@ function Admin() {
     });
     setEditMode(true);
     setEditId(product.id);
+    setImageUploaded(!!product.image);
     window.scrollTo(0, 0);
   };
 
   const handleAddOrUpdateProduct = async () => {
+    if (!imageUploaded && !product.image) {
+      setShowImageWarning(true);
+      return;
+    }
+
     try {
       let imageUrl = product.image;
       if (imageFile) {
@@ -544,14 +589,16 @@ function Admin() {
         categories: [],
         subcategories: [],
         description: '',
-        rating: 0,
-        ratingCount: 0,
-        reviewCount: 0,
+        rating: '',
+        ratingCount: '',
+        reviewCount: '',
         sizes: [],
         productCode: '',
         createdBy: ''
       });
       setImageFile(null);
+      setImageUploaded(false);
+      setShowImageWarning(false);
       setEditMode(false);
       setEditId(null);
     } catch (error) {
@@ -580,9 +627,14 @@ function Admin() {
           <input type="number" name="price" placeholder="Price" value={product.price} onChange={handleChange} />
         </div>
         <div className="input-group">
-          <label className="upload-label" htmlFor="image-upload">Upload Image</label>
+          <label className={`upload-label ${imageUploaded ? 'uploaded' : ''}`} htmlFor="image-upload">
+            {imageUploaded ? 'Image Uploaded' : 'Upload Image'}
+          </label>
           <input id="image-upload" type="file" name="image" onChange={handleImageChange} />
         </div>
+        {showImageWarning && (
+          <p className="image-warning">Please upload an image before adding/updating the product.</p>
+        )}
         <div className="input-group">
           <div className="categories-container">
             {Object.keys(categorySubcategories).map(category => (
@@ -672,13 +724,15 @@ function Admin() {
               categories: [],
               subcategories: [],
               description: '',
-              rating: 0,
-              ratingCount: 0,
-              reviewCount: 0,
+              rating: '',
+              ratingCount: '',
+              reviewCount: '',
               sizes: [],
               productCode: '',
               createdBy: ''
             });
+            setImageUploaded(false);
+            setShowImageWarning(false);
           }} className="cancel-edit-button">
             Cancel Edit
           </button>
