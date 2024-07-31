@@ -316,6 +316,30 @@ select {
   transform: rotate(45deg);
 }
 
+.seo-section .input-group {
+  margin-bottom: 15px;
+}
+
+.seo-section input[type="text"],
+.seo-section textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.seo-section textarea {
+  resize: vertical;
+}
+
+.seo-section input[type="text"]:focus,
+.seo-section textarea:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
 
 @media (max-width: 768px) {
   .product-list ul {
