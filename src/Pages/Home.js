@@ -141,6 +141,7 @@ import Poster from '../components/Poster';
 import { sendWhatsAppMessage } from '../Utils/whatsapp';
 import Faq from '../components/Faq';
 import Login from '../Admin/Login';
+import Footer from '../components/Footer';
 
 function Home() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -334,8 +335,9 @@ function Home() {
         <Faq/>
       </section>
     
-
+<Footer/>
     </main>
+    
   );
 }
 

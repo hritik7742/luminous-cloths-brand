@@ -1,5 +1,6 @@
 .product-list {
-  padding: 40px 0;
+  /* padding: 40px 0; */
+  padding-top: 20px;
 }
 
 .product-list h1 {
@@ -45,6 +46,13 @@
 @media (max-width: 768px) {
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 9px;
+    /* gap: 9px; */
+    gap: 1px;
+    /* background-color: lightgray; */
+  }
+
+  #productbox{
+  margin: 0;
+  padding: 0;
   }
 }

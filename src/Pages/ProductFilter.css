@@ -103,10 +103,68 @@ input[type="checkbox"]:checked::before {
   font-size: 12px;
 }
 
+
+.subcategory-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.subcategory-button {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  color: #333333;
+  cursor: pointer;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  font-family: 'Arial', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subcategory-button.selected {
+  background-color: #2c3e50;
+  color: #ffffff;
+  border-color: #2c3e50;
+}
+
+.subcategory-button:hover {
+  background-color: #f8f8f8;
+  border-color: #d0d0d0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.subcategory-button.selected:hover {
+  background-color: #34495e;
+  border-color: #34495e;
+}
+
+@media (max-width: 768px) {
+  .subcategory-boxes {
+    justify-content: center;
+  }
+  
+  .subcategory-button {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
 /* Mobile Styles */
 @media (max-width: 768px) {
   .desktop-filter {
     display: none;
+  }
+
+  .product-filter{
+    box-shadow: none;
+    padding: 0;
   }
 
   .mobile-filter {

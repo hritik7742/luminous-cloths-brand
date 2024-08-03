@@ -151,6 +151,7 @@ h1 {
 
 .whatsapp-btn {
   display: inline-flex;
+  display:none;
   align-items: center;
   background-color: #25D366;
   color: white;

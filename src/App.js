@@ -112,7 +112,7 @@ function Layout({ children }) {
     <>
       {showHeaderFooter && <Header />}
       <main className="site-content">{children}</main>
-      {showHeaderFooter && <Footer />}
+      {/* {showHeaderFooter && <Footer />} */}
     </>
   );
 }
